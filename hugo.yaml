@@ -1,0 +1,204 @@
+baseURL: "https://damned-matt.github.io/portfolio/"
+title: "Matteo Pipola | Portfolio"
+theme: hugo-profile
+
+# Configurazione Lingua
+defaultContentLanguage: "it"
+defaultContentLanguageInSubdir: false
+
+languages:
+  it:
+    languageCode: "it-it"
+    languageName: "Italiano"
+    weight: 1
+    contentDir: "content"
+
+outputs:
+  home:
+    - "HTML"
+    - "JSON"
+  page:
+    - "HTML"
+
+enableRobotsTXT: true
+pagination:
+  pagerSize: 3
+
+markup:
+  goldmark:
+    renderer:
+      unsafe: true
+
+params:
+  title: "Matteo Pipola | Portfolio"
+  description: "Portfolio professionale di Matteo Pipola - System & Network Administrator"
+  favicon: "fav.png"
+  useBootstrapCDN: false
+  animate: true
+
+  navbar:
+    align: ms-auto
+    brandName: "Matteo Pipola"
+    disableSearch: true
+    stickyNavBar:
+      enable: true
+      showOnScrollUp: true
+    enableSeparator: false
+    menus:
+      disableAbout: false
+      disableExperience: false
+      disableEducation: false
+      disableProjects: false
+      disableAchievements: true
+      disableContact: false
+
+  # Sezione Iniziale (Hero)
+  hero:
+    enable: true
+    intro: "Ciao, mi chiamo"
+    title: "Matteo Pipola"
+    subtitle: "System & Network Administrator Junior"
+    content: "Specializzato nella gestione di infrastrutture IT, amministrazione di domini Active Directory, supporto sistemistico avanzato e automazione tramite scripting in PowerShell e Python."
+    image: "images/me.jpg"
+    roundImage: true
+    bottomImage:
+      enable: true
+    button:
+      enable: false
+    socialLinks:
+      fontAwesomeIcons:
+        - icon: "fab fa-github"
+          url: "https://github.com"
+        - icon: "fab fa-linkedin"
+          url: "https://linkedin.com"
+
+  # Sezione Chi Sono (About)
+  about:
+    enable: true
+    title: "Chi Sono"
+    image: "images/me-black.jpg"
+    content: |-
+      Sono un Amministratore di Sistema e di Rete orientato alla sicurezza, alla risoluzione mirata di problematiche complesse e all'efficienza operativa delle infrastrutture IT aziendali.
+
+      Ho maturato una solida esperienza nel supporto tecnico L1/L2 avanzato, nella gestione e amministrazione di domini Active Directory, e nell'applicazione di policy di conformità e sicurezza (Intune/Azure AD). Sviluppo script e piccoli applicativi in PowerShell e Python come strumenti sistemistici per automatizzare la manutenzione dei server, garantire l'integrità dei piani di backup aziendali e azzerare i task manuali ridondanti.
+    skills:
+      enable: true
+      title: "Ecosistemi tecnologici e competenze core:"
+      items:
+        - "PowerShell Scripting & GUI .NET"
+        - "Python (Pandas, Automation, API REST)"
+        - "Active Directory & Azure AD / Intune"
+        - "Networking & Troubleshooting LAN/WAN/VPN"
+        - "Linux Server (Debian/Ubuntu) & Windows Server"
+        - "Docker, Containerizzazione & VMware"
+        - "Sistemi Gestionali e Ticketing (SAP, GLPI, Redmine)"
+
+  # Sezione Esperienza
+  experience:
+    enable: true
+    title: "Esperienza Professionale"
+    items:
+      - company: "Surgital SpA"
+        companyUrl: "https://www.surgital.it/"
+        jobs:
+          - name: "System & Network Administrator"
+            date: "Ottobre 2025 - Presente"
+            content: |
+              - Gestione e manutenzione ordinaria e straordinaria dell'architettura di rete aziendale.
+              - Sviluppo di automazioni infrastrutturali per il monitoraggio preventivo, l'ottimizzazione dello spazio storage sui server e la manutenzione sussidiaria dei sistemi core.
+              - Ottimizzazione dei processi di backup aziendali e disaster recovery per environments fisici e containerizzati.
+      - company: "Unitec SpA"
+        companyUrl: "https://www.unitec-group.com/"
+        jobs:
+          - name: "Impiegato Informatico - Help Desk L1/L2"
+            date: "Ottobre 2024 - Ottobre 2025"
+            content: |
+              - Fornitura di supporto tecnico di primo e secondo livello (L1/L2) a utenti interni, on-site e da remoto nelle filiali tramite TeamViewer.
+              - Gestione e amministrazione di Active Directory, gruppi, licenze Microsoft 365, policy MDM Intune e Azure AD.
+              - Implementazione di script in PowerShell e Python per automatizzare i processi IT interni; gestione del ciclo dei ticket tramite GLPI, Redmine e interfaccia con gestionale SAP.
+      - company: "Teleco"
+        companyUrl: ""
+        jobs:
+          - name: "Tecnico Informatico"
+            date: "Marzo 2024 - Giugno 2024"
+            content: |
+              - Sviluppo e manutenzione del portale aziendale in ambiente ASP, correzione bug e implementazione di nuove funzionalità.
+              - Gestione dell'help desk L1 interno e riparazione/configurazione hardware e software delle workstation aziendali.
+
+  # Sezione Istruzione
+  education:
+    enable: true
+    title: "Istruzione e Formazione"
+    items:
+      - title: "Perito Informatico"
+        school:
+          name: "ITI Copernico Carpeggiani (Ferrara)"
+          url: "#"
+        date: "Settembre 2017 - Giugno 2022"
+        content: "Diploma di istruzione secondaria superiore ad indirizzo tecnico-informatico."
+
+  # Sezione Progetti
+  projects:
+    enable: true
+    title: "Progetti & Automazioni"
+    items:
+      - title: "Infrastruttura Docker Homepage & BookStack"
+        content: "Progettazione di un ambiente documentale aziendale containerizzato su host Linux Debian 12 virtualizzato su VMware. Gestione di docker-compose articolati, volumi persistenti, MariaDB e script per backup quotidiani automatici via cron."
+        image: "images/script.jpg"
+        badges:
+          - "Docker"
+          - "Debian"
+          - "VMware"
+        links:
+          - icon: "fab fa-github"
+            url: "https://github.com"
+
+      - title: "BookStack Folder Importer"
+        content: "Applicativo Windows Form sviluppato in PowerShell con interfaccia grafica .NET. Esegue lo scanning ricorsivo di share di rete ed effettua l'importazione massiva di documentazione aziendale (.docx, .pdf, .xlsx) in BookStack via API REST, ricostruendo fedelmente la gerarchia delle cartelle."
+        image: "images/script.jpg"
+        badges:
+          - "PowerShell"
+          - "REST API"
+          - ".NET GUI"
+        links:
+          - icon: "fas fa-book-open"
+            url: "projects/bookstack_importer/"
+
+      - title: "Machine Poller & Data Engineering"
+        content: "Pipeline scritta in Python per l'estrazione periodica automatizzata dei log pesate da un macchinario di produzione industriale. Gestisce il download sicuro via API HTTP, l'azzeramento programmato della RAM della macchina e la successiva archiviazione incrementale in report Excel tramite Pandas."
+        image: "images/script.jpg"
+        badges:
+          - "Python"
+          - "Pandas"
+          - "Industrial OT"
+        links:
+          - icon: "fab fa-github"
+            url: "https://github.com"
+
+      - title: "Active Directory Compliance & Audit Tools"
+        content: "Sviluppo di strumenti di auditing PowerShell per la sicurezza dei domini AD. Include un tool grafico per l'identificazione ed esportazione (CSV/TXT) degli account utente inattivi e uno script di analisi di sicurezza bitwise sull'attributo msDS-SupportedEncryptionTypes per validare gli algoritmi di cifratura Kerberos/AES attivi sulle macchine."
+        image: "images/script.jpg"
+        badges:
+          - "PowerShell"
+          - "Active Directory"
+          - "Security"
+        links:
+          - icon: "fab fa-github"
+            url: "https://github.com"
+
+  # Sezione Contatti
+  contact:
+    enable: true
+    content: "La mia casella di posta è sempre aperta. Se vuoi scambiare due chiacchiere su architetture di rete, gestione server, cybersecurity o scripting sistemistico, fai un fischio!"
+    btnName: Scrivimi un'e-mail
+    btnLink: "mailto:matteo.pipola.mty@gmail.com"
+
+  footer:
+    recentPosts:
+      path: "blogs"
+      count: 0
+      title: "Recent Posts"
+      enable: false
+    socialNetworks:
+      github: "https://github.com"
+      linkedin: "https://linkedin.com"
