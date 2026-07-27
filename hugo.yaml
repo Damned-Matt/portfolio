@@ -138,7 +138,10 @@ params:
         content: "Diploma di istruzione secondaria superiore ad indirizzo tecnico-informatico."
 
   # Sezione Progetti
- 
+  projects:
+    enable: true
+    title: "Progetti & Automazioni"
+    items:
   # Sezione Contatti
   contact:
     enable: true
