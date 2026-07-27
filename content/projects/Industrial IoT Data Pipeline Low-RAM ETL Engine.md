@@ -1,19 +1,20 @@
 ---
 title: "Industrial IoT Data Pipeline & Low-RAM ETL Engine"
 date: 2026-07-27
-description: "Architettura completa per l'acquisizione, la persistenza e l'elaborazione ETL di dati da macchinari industriali."
+description: "Architettura per l'acquisizione, la persistenza e l'elaborazione ETL di dati da macchinari industriali con approccio Low-RAM."
 tags: ["Python", "IoT", "ETL", "Pandas", "Automation", "System Administration"]
 draft: false
 ---
 
-# Industrial IoT Data Pipeline &amp; Low-RAM ETL Engine
+# 🏭 Industrial IoT Data Pipeline & Low-RAM ETL Engine
 
 Un'architettura completa per l'acquisizione, la persistenza e l'elaborazione ETL di dati da macchinari di pesatura industriale. Il sistema collega l'infrastruttura operativa (OT) con i sistemi d'analisi IT aziendali, risolvendo le limitazioni di RAM dei dispositivi periferici (*edge*) e garantendo la gestione di file di log di grandi dimensioni con un'impronta di memoria minimale.
 
-## Architettura di Sistema
+---
 
+## 📐 Architettura di Sistema
 
-<div _ngcontent-ng-c1436864849="" class="code-block ng-tns-c1436864849-193 ng-animate-disabled ng-trigger ng-trigger-codeBlockRevealAnimation" id="bkmrk--1" jslog="223238;track:impression,attention;BardVeMetadataKey:[["r_318ef91d8f7a4a90","c_61e9f8d1fca2527b",null,"rc_bee685d8a2fdd1ac",null,null,"it",null,1,null,null,1,0]]"><div _ngcontent-ng-c1436864849="" class="formatted-code-block-internal-container ng-tns-c1436864849-193"><div _ngcontent-ng-c1436864849="" class="animated-opacity ng-tns-c1436864849-193"></div></div></div>```
+```
 +---------------------------+
 | Industrial Batch Scale    |
 | (Edge Memory Limited)     |
@@ -36,66 +37,400 @@ Un'architettura completa per l'acquisizione, la persistenza e l'elaborazione ETL
 +---------------------------+     (Interactive Low-RAM Stream) +------------+------------+
 | 03. Historical Recovery   | -------------------------------->| Structured Excel Output |
 | CLI Utility (On-Demand)   |                                  | (/YYYY/MM/Report.xlsx)  |
-+---------------------------+                                  +-------------------------+
-
++---------------------------+     ---------------------------->+-------------------------+
 ```
 
-<div _ngcontent-ng-c1436864849="" class="code-block ng-tns-c1436864849-193 ng-animate-disabled ng-trigger ng-trigger-codeBlockRevealAnimation" id="bkmrk--2" jslog="223238;track:impression,attention;BardVeMetadataKey:[["r_318ef91d8f7a4a90","c_61e9f8d1fca2527b",null,"rc_bee685d8a2fdd1ac",null,null,"it",null,1,null,null,1,0]]"><div _ngcontent-ng-c1436864849="" class="formatted-code-block-internal-container ng-tns-c1436864849-193"><div _ngcontent-ng-c1436864849="" class="animated-opacity ng-tns-c1436864849-193"></div></div></div>
-## Il Problema Aziendale &amp; La Soluzione
+---
+
+## 💡 Il Problema Aziendale & La Soluzione
 
 ### **Contesto e Criticità**
-
-- **Memoria Periferica Limitata:** La scheda di controllo del macchinario industriale accumula i dati di pesatura nella RAM interna. Senza una pulizia periodica, il sistema va in overflow bloccando le registrazioni.
-- **Rischio di Perdita Dati:** Network glitch o failure durante lo scarico rischiano di svuotare la RAM del macchinario prima della scrittura sicura su disco aziendale.
-- **Gestione Grandi Volumi (RAM Bottleneck):** Il file di log cumulativo accumula centinaia di migliaia di righe. Caricare l'intero file in memoria con tradizionali librerie d'analisi genera crash di sistema sui server di produzione.
+* **Memoria Periferica Limitata:** La scheda di controllo del macchinario industriale accumula i dati di pesatura nella RAM interna. Senza una pulizia periodica, il sistema va in overflow bloccando le registrazioni.
+* **Rischio di Perdita Dati:** Network glitch o failure durante lo scarico rischiano di svuotare la RAM del macchinario prima della scrittura sicura su disco aziendale.
+* **Gestione Grandi Volumi (RAM Bottleneck):** Il file di log cumulativo accumula centinaia di migliaia di righe. Caricare l'intero file in memoria con tradizionali librerie d'analisi genera crash di sistema sui server di produzione.
 
 ### **Soluzione Ingegneristica**
+1. **Poller Atomico a 4 Fasi:** Un demone schedulato esegue l'estrazione dati, la deduplica basata su timestamp, la scrittura atomica su disco con *fsync* fisico e, solo ad operazione confermata, l'azzeramento della RAM della macchina.
+2. **Streaming Parser (Low-RAM Processing):** Tutti gli script utilizzano una lettura sequenziale *line-by-line* (I/O streaming) isolando solo i record necessari prima di alimentarli al motore d'analisi Pandas, riducendo l'occupazione di memoria da gigabyte a pochi megabyte.
+3. **ETL & Feature Engineering:** Conversione automatica delle serie di sensori grezzi ($W_{01..16}$ e $B_{01..16}$) in metriche operative aggregate esportate in file Excel categorizzati per Anno/Mese.
 
-1. <span data-path-to-node="12,0,0,0">**Poller Atomico a 4 Fasi:** Un demone schedulato esegue l'estrazione dati, la deduplica basata su timestamp, la scrittura atomica su disco con *fsync* fisico e, solo ad operazione confermata, l'azzeramento della RAM della macchina</span><span data-path-to-node="12,0,0,1"><sup class="superscript"></sup></span><span data-path-to-node="12,0,0,2">.</span>
-2. <span data-path-to-node="12,1,0,0">**Streaming Parser (Low-RAM Processing):** Tutti gli script utilizzano una lettura sequenziale *line-by-line* (I/O streaming) isolando solo i record necessari prima di alimentarli al motore d'analisi Pandas, riducendo l'occupazione di memoria da gigabyte a pochi megabyte</span><span data-path-to-node="12,1,0,1"><sup class="superscript"></sup></span><span data-path-to-node="12,1,0,2">.</span>
-3. <span data-path-to-node="12,2,0,0">**ETL &amp; Feature Engineering:** Conversione automatica delle serie di sensori grezzi (<span class="math-inline" data-index-in-node="81" data-math="W_{01..16}">$W\_{01..16}$</span> e <span class="math-inline" data-index-in-node="94" data-math="B_{01..16}">$B\_{01..16}$</span>) in metriche operative aggregate esportate in file Excel categorizzati per Anno/Mese</span><span data-path-to-node="12,2,0,1"><sup class="superscript"></sup></span><span data-path-to-node="12,2,0,2">.</span>
+---
 
-## Tech Stack &amp; Requisiti
+## 🛠️ Tech Stack & Requisiti
 
-- <span data-path-to-node="15,0,0,0">**Language:** Python 3.8+</span><span data-path-to-node="15,0,0,1"><sup class="superscript"></sup></span>
-- **Libraries:** `pandas`, `openpyxl`, `requests`, `pathlib`
-    
-    <sup class="superscript"></sup>
-- <span data-path-to-node="15,2,0,0">**OS / Environment:** Windows Server / Linux Enterprise Host</span><span data-path-to-node="15,2,0,1"><sup class="superscript"></sup></span>
-- <span data-path-to-node="15,3,0,0">**Scheduling:** Windows Task Scheduler / Linux Cron</span><span data-path-to-node="15,3,0,1"><sup class="superscript"></sup></span>
-- <span data-path-to-node="15,4,0,0">**Protocols:** HTTP/REST API (Communication with Edge Hardware)</span><span data-path-to-node="15,4,0,1"><sup class="superscript"></sup></span>
+* **Language:** Python 3.8+
+* **Libraries:** `pandas`, `openpyxl`, `requests`, `pathlib`
+* **OS / Environment:** Windows Server / Linux Enterprise Host
+* **Scheduling:** Windows Task Scheduler / Linux Cron
+* **Protocols:** HTTP/REST API (Communication with Edge Hardware)
 
-## Struttura dei Moduli
+---
+
+## 📑 Struttura dei Moduli
 
 ### 1. `poller_daemon.py` — *Ingestion Engine*
-
-- <span data-path-to-node="19,0,0,0">**Frequenza:** Esecuzione ogni 10 minuti via Task Scheduler</span><span data-path-to-node="19,0,0,1"><sup class="superscript"></sup></span><span data-path-to-node="19,0,0,2">.</span>
-- **Logica Operativa:**
-    
-    
-    - <span data-path-to-node="19,1,1,0,0,0">Effettua una richiesta `HTTP POST` con azione `download` al macchinario</span><span data-path-to-node="19,1,1,0,0,1"><sup class="superscript"></sup></span><span data-path-to-node="19,1,1,0,0,2">.</span>
-    - <span data-path-to-node="19,1,1,1,0,0">Verifica il file di stato (`last_timestamp.txt`) per filtrare ed eliminare record duplicati</span><span data-path-to-node="19,1,1,1,0,1"><sup class="superscript"></sup></span><span data-path-to-node="19,1,1,1,0,2">.</span>
-    - <span data-path-to-node="19,1,1,2,0,0">Scrive le nuove righe sul log di persistenza ed esegue `os.fsync()` per forzare la scrittura fisica su disco evitando l'I/O caching</span><span data-path-to-node="19,1,1,2,0,1"><sup class="superscript"></sup></span><span data-path-to-node="19,1,1,2,0,2">.</span>
-    - <span data-path-to-node="19,1,1,3,0,0">Invia il comando `POST` `azzera_log` al macchinario per liberare la memoria periferica</span><span data-path-to-node="19,1,1,3,0,1"><sup class="superscript"></sup></span><span data-path-to-node="19,1,1,3,0,2">.</span>
+* **Frequenza:** Esecuzione ogni 10 minuti via Task Scheduler.
+* **Logica Operativa:**
+  * Effettua una richiesta `HTTP POST` con azione `download` al macchinario.
+  * Verifica il file di stato (`last_timestamp.txt`) per filtrare ed eliminare record duplicati.
+  * Scrive le nuove righe sul log di persistenza ed esegue `os.fsync()` per forzare la scrittura fisica su disco evitando l'I/O caching.
+  * Invia il comando `POST` `azzera_log` al macchinario per liberare la memoria periferica.
 
 ### 2. `daily_archiver.py` — *Nightly Batch ETL*
+* **Frequenza:** Esecuzione notturna automatizzata (es. ore 00:30).
+* **Logica Operativa:**
+  * Calcola dinamicamente la data $T-1$ (giorno precedente).
+  * Scansiona in modalità *stream* il log storico filtrando solo le righe pertinenti.
+  * Normalizza le serie numeriche e calcola i pesi totali e parziali secondo i modelli:
 
-- <span data-path-to-node="21,0,0,0">**Frequenza:** Esecuzione notturna automatizzata (es. ore 00:30)</span><span data-path-to-node="21,0,0,1"><sup class="superscript"></sup></span><span data-path-to-node="21,0,0,2">.</span>
-- **Logica Operativa:**
-    
-    
-    - <span data-path-to-node="21,1,1,0,0,0">Calcola dinamicamente la data <span class="math-inline" data-index-in-node="30" data-math="T-1">$T-1$</span> (Giorno precedente)</span><span data-path-to-node="21,1,1,0,0,1"><sup class="superscript"></sup></span><span data-path-to-node="21,1,1,0,0,2">.</span>
-    - <span data-path-to-node="21,1,1,1,0,0">Scansiona in modalità *stream* il log storico filtrando solo le righe pertinenti</span><span data-path-to-node="21,1,1,1,0,1"><sup class="superscript"></sup></span><span data-path-to-node="21,1,1,1,0,2">.</span>
-    - <span data-path-to-node="21,1,1,2,0,0">Normalizza le serie numeriche e calcola i pesi totali e parziali secondo il modello</span><span data-path-to-node="21,1,1,2,0,1"><sup class="superscript"></sup></span><span data-path-to-node="21,1,1,2,0,2">: </span>
-        
-        <div data-path-to-node="21,1,1,2,1"><div class="math-block" data-math="\text{PESO TOT} = \frac{\sum_{i=1}^{16} W_i + \sum_{i=1}^{16} B_i}{10}">$$\text{PESO TOT} = \frac{\sum_{i=1}^{16} W_i + \sum_{i=1}^{16} B_i}{10}$$</div></div><div data-path-to-node="21,1,1,2,2"><div class="math-block" data-math="\text{PESO CANALE B} = \frac{\sum_{i=1}^{16} W_i}{10}, \quad \text{PESO CANALE A} = \frac{\sum_{i=1}^{16} B_i}{10}">$$\text{PESO CANALE B} = \frac{\sum_{i=1}^{16} W_i}{10}, \quad \text{PESO CANALE A} = \frac{\sum_{i=1}^{16} B_i}{10}$$</div></div>
-    - <span data-path-to-node="21,1,1,3,0,0">Genera e organizza i file Excel nell'alberatura `/Archivio_Excel/YYYY/MM/WeightReport_YYYY-MM-DD.xlsx`</span><span data-path-to-node="21,1,1,3,0,1"><sup class="superscript"></sup></span><span data-path-to-node="21,1,1,3,0,2">.</span>
+$$ \text{PESO TOT} = \frac{\sum_{i=1}^{16} W_i + \sum_{i=1}^{16} B_i}{10} $$
+
+$$ \text{PESO CANALE B} = \frac{\sum_{i=1}^{16} W_i}{10}, \quad \text{PESO CANALE A} = \frac{\sum_{i=1}^{16} B_i}{10} $$
+
+  * Genera e organizza i file Excel nell'alberatura `/Archivio_Excel/YYYY/MM/WeightReport_YYYY-MM-DD.xlsx`.
 
 ### 3. `recovery_cli.py` — *Interactive Historical Extractor*
+* **Modalità:** Utility ad uso manuale / interattivo.
+* **Logica Operativa:**
+  * Accetta in input una lista di date arbitrarie (formato `YYYY-MM-DD`).
+  * Scansiona il log con approccio Low-RAM ed estrae i dati storici rigenerando la struttura reportistica senza caricare il file cumulativo in memoria.
 
-- <span data-path-to-node="23,0,0,0">**Modalità:** Utility ad uso manuale / interattivo</span><span data-path-to-node="23,0,0,1"><sup class="superscript"></sup></span><span data-path-to-node="23,0,0,2">.</span>
-- **Logica Operativa:**
+---
+
+## ⚙️ Configurazione & Variabili d'Ambiente
+
+Per l'installazione in ambienti di produzione o di test, configurare i parametri principali all'interno delle variabili di sistema o dei file `.env`:
+
+```python
+# Network Endpoint Macchinario Industriale
+MACHINE_URL = "http://<INDUSTRIAL_MACHINE_IP>/api/v1/data"
+TIMEOUT_SEC = 15
+
+# Percorsi di Sistema & Archiviazione
+BASE_DIR = Path(r"C:\IoT_WeightLogger")
+STORICO_FILE = BASE_DIR / "storico.log"
+STATE_FILE = BASE_DIR / "last_timestamp.txt"
+ARCHIVIO_DIR = BASE_DIR / "Archivio_Excel"
+MONITOR_FILE = BASE_DIR / "pipeline_execution.log"
+```
+
+---
+
+## 💻 Codice Sorgente Sanificato
+
+### Modulo 1: Ingestion Engine (`poller_daemon.py`)
+
+```python
+#!/usr/bin/env python3
+"""
+poller_daemon.py
+================
+Demone di Ingestion per scarico dati da macchinari industriali.
+Esegue persistenza atomica su disco e svuotamento memoria dell'Edge Device.
+"""
+
+import os
+import sys
+import logging
+import requests
+from pathlib import Path
+from typing import Optional, Tuple, List
+
+# --- CONFIGURAZIONE SANIFICATA ---
+MACHINE_URL = os.getenv("MACHINE_ENDPOINT", "[http://192.168.1.100/api/index.php](http://192.168.1.100/api/index.php)")
+TIMEOUT_SEC = 15
+
+BASE_DIR = Path(os.getenv("DATA_DIR", r"C:\IoT_WeightLogger"))
+STORICO_FILE = BASE_DIR / "storico.log"
+STATE_FILE = BASE_DIR / "last_timestamp.txt"
+MONITOR_FILE = BASE_DIR / "monitor_script.log"
+
+HEADER_LINE = (
+    "date\ttipoalarm\terr\tcombiSize\thopperIdx"
+    "\terrA\terrB\terrC\terrD"
+    + "".join(f"\tW{i:02d}" for i in range(1, 17))
+    + "".join(f"\tB{i:02d}" for i in range(1, 17))
+)
+
+def setup_logging() -> None:
+    BASE_DIR.mkdir(parents=True, exist_ok=True)
+    logger = logging.getLogger()
+    logger.setLevel(logging.INFO)
+    if logger.hasHandlers():
+        logger.handlers.clear()
+
+    file_handler = logging.FileHandler(str(MONITOR_FILE), encoding="utf-8")
+    formatter = logging.Formatter("%(asctime)s  %(levelname)-8s  %(message)s", datefmt="%Y-%m-%d %H:%M:%S")
+    file_handler.setFormatter(formatter)
+    logger.addHandler(file_handler)
+
+def load_last_timestamp() -> Optional[str]:
+    if STATE_FILE.exists():
+        ts = STATE_FILE.read_text(encoding="utf-8").strip()
+        return ts if ts else None
+    return None
+
+def save_last_timestamp(ts: str) -> None:
+    STATE_FILE.write_text(ts, encoding="utf-8")
+
+def download_log() -> str:
+    response = requests.post(MACHINE_URL, data={"action": "download"}, timeout=TIMEOUT_SEC)
+    response.raise_for_status()
+    response.encoding = "utf-8"
+    return response.text
+
+def parse_new_lines(raw_text: str, last_ts: Optional[str]) -> Tuple[List[str], Optional[str]]:
+    new_lines: List[str] = []
+    latest_ts: Optional[str] = last_ts
+
+    for raw_line in raw_text.splitlines():
+        line = raw_line.rstrip()
+        if not line:
+            continue
+        parts = line.split("\t")
+        if len(parts) < 5:
+            continue
+        ts = parts[0].strip()
+        if not ts or not ts[0].isdigit():
+            continue
+
+        if last_ts is None or ts > last_ts:
+            new_lines.append(line)
+            if latest_ts is None or ts > latest_ts:
+                latest_ts = ts
+
+    return new_lines, latest_ts
+
+def append_to_storico(lines: List[str]) -> None:
+    BASE_DIR.mkdir(parents=True, exist_ok=True)
+    write_header = not STORICO_FILE.exists()
+
+    with open(STORICO_FILE, "a", encoding="utf-8", newline="\n") as f:
+        if write_header:
+            f.write(HEADER_LINE + "\n")
+        for line in lines:
+            f.write(line + "\n")
+        f.flush()
+        os.fsync(f.fileno())  # Scrittura atomica/sincronizzata su disco fisico
+
+def clear_machine_log() -> None:
+    response = requests.post(MACHINE_URL, data={"action": "azzera_log"}, timeout=TIMEOUT_SEC)
+    response.raise_for_status()
+
+def main() -> None:
+    setup_logging()
+
+    try:
+        raw_text = download_log()
+    except Exception as exc:
+        logging.error("FASE 1 FALLITA | Errore download: %s", exc)
+        sys.exit(1)
+
+    last_ts = load_last_timestamp()
+    new_lines, latest_ts = parse_new_lines(raw_text, last_ts)
+
+    if not new_lines:
+        logging.info("Nessun nuovo dato trovato.")
+        sys.exit(0)
+
+    try:
+        append_to_storico(new_lines)
+    except Exception as exc:
+        logging.error("FASE 3 FALLITA | Errore scrittura disco: %s", exc)
+        sys.exit(1)
+
+    save_last_timestamp(latest_ts)
+
+    cleared = False
+    try:
+        clear_machine_log()
+        cleared = True
+    except Exception as exc:
+        logging.warning("FASE 4 | Azzeramento RAM periferica fallito: %s", exc)
+
+    logging.info("OK | %d righe salvate | ultimo ts: %s | RAM azzerata: %s", len(new_lines), latest_ts, cleared)
+
+if __name__ == "__main__":
+    main()
+```
+
+---
+
+### Modulo 2: Daily Archiver (`daily_archiver.py`)
+
+```python
+#!/usr/bin/env python3
+"""
+daily_archiver.py
+=================
+Modulo ETL notturno: Estrazione Low-RAM dati T-1, calcolo aggregati
+e generazione reportistica Excel strutturata per data.
+"""
+
+import sys
+import io
+import logging
+import pandas as pd
+from datetime import datetime, timedelta
+from pathlib import Path
+
+BASE_DIR = Path(r"C:\IoT_WeightLogger")
+STORICO_FILE = BASE_DIR / "storico.log"
+MONITOR_FILE = BASE_DIR / "monitor_archiviazione.log"
+ARCHIVIO_DIR = BASE_DIR / "Archivio_Excel"
+
+def setup_logging() -> logging.Logger:
+    logger = logging.getLogger("Archiviazione")
+    logger.setLevel(logging.INFO)
+    if logger.hasHandlers():
+        logger.handlers.clear()
     
+    file_handler = logging.FileHandler(str(MONITOR_FILE), encoding="utf-8")
+    formatter = logging.Formatter("%(asctime)s  %(levelname)-8s  %(message)s", datefmt="%Y-%m-%d %H:%M:%S")
+    file_handler.setFormatter(formatter)
+    logger.addHandler(file_handler)
+    return logger
+
+def main():
+    log = setup_logging()
+    ieri = datetime.now() - timedelta(days=1)
+    data_target_str = ieri.strftime("%Y-%m-%d")
     
-    - <span data-path-to-node="23,1,1,0,0,0">Accetta in input una lista di date arbitrarie (formato `YYYY-MM-DD`)</span><span data-path-to-node="23,1,1,0,0,1"><sup class="superscript"></sup></span><span data-path-to-node="23,1,1,0,0,2">.</span>
-    - <span data-path-to-node="23,1,1,1,0,0">Scansiona il log con approccio Low-RAM ed estrae i dati storici rigenerando la struttura reportistica senza caricare il file cumulativo in memoria</span><span data-path-to-node="23,1,1,1,0,1"><sup class="superscript"></sup></span><span data-path-to-node="23,1,1,1,0,2">.</span>
+    log.info(f"Avvio ETL Low-RAM per la data: {data_target_str}")
+    
+    if not STORICO_FILE.exists():
+        log.error("File di log storico non trovato. Interruzione.")
+        sys.exit(1)
+
+    try:
+        matching_lines = []
+        # Lettura in streaming riga per riga (Low-RAM Footprint)
+        with open(STORICO_FILE, "r", encoding="utf-8") as f:
+            header_line = f.readline()
+            for line in f:
+                if line.startswith(data_target_str):
+                    matching_lines.append(line)
+        
+        if not matching_lines:
+            log.info(f"Nessun dato registrato per il {data_target_str}.")
+            sys.exit(0)
+
+        dati_filtrati = header_line + "".join(matching_lines)
+        df_ieri = pd.read_csv(io.StringIO(dati_filtrati), sep='\t')
+        df_ieri['date'] = pd.to_datetime(df_ieri['date'], errors='coerce')
+
+        # Feature Engineering: Calcoli su canali sensori W e B
+        colonne_w = [f'W{i:02d}' for i in range(1, 17)]
+        colonne_b = [f'B{i:02d}' for i in range(1, 17)]
+
+        df_ieri[colonne_w] = df_ieri[colonne_w].apply(pd.to_numeric, errors='coerce').fillna(0)
+        df_ieri[colonne_b] = df_ieri[colonne_b].apply(pd.to_numeric, errors='coerce').fillna(0)
+
+        # Calcolo dei pesi aggregati
+        df_ieri['PESO SCARICO TOT'] = df_ieri[colonne_w + colonne_b].sum(axis=1) / 10
+        df_ieri['PESO SCARICO B'] = df_ieri[colonne_w].sum(axis=1) / 10
+        df_ieri['PESO SCARICO A'] = df_ieri[colonne_b].sum(axis=1) / 10
+
+        df_ieri['date'] = df_ieri['date'].dt.strftime("%Y-%m-%d %H:%M:%S")
+
+        # Organizzazione Output /YYYY/MM/
+        percorso_out = ARCHIVIO_DIR / str(ieri.year) / f"{ieri.month:02d}"
+        percorso_out.mkdir(parents=True, exist_ok=True)
+        
+        file_excel = percorso_out / f"WeightReport_{data_target_str}.xlsx"
+        df_ieri.to_excel(file_excel, index=False, engine='openpyxl')
+        
+        log.info(f"OK | Generato report Excel: {file_excel.name} ({len(df_ieri)} righe elaborate).")
+
+    except Exception as exc:
+        log.error(f"Errore critico durante l'elaborazione ETL: {exc}")
+        sys.exit(1)
+
+if __name__ == "__main__":
+    main()
+```
+
+---
+
+### Modulo 3: Recovery CLI (`recovery_cli.py`)
+
+```python
+#!/usr/bin/env python3
+"""
+recovery_cli.py
+===============
+Utility CLI interattiva per estrazione e recupero storico dati Low-RAM
+su range di date arbitrarie.
+"""
+
+import sys
+import io
+import pandas as pd
+from datetime import datetime
+from pathlib import Path
+
+STORICO_FILE = Path(r"C:\IoT_WeightLogger\storico.log")
+ARCHIVIO_DIR = Path(r"C:\IoT_WeightLogger\Archivio_Excel")
+
+if not STORICO_FILE.exists():
+    print(f"Errore: Il file {STORICO_FILE} non esiste!")
+    sys.exit(1)
+
+print("--- RECUPERO PESATE STORICHE (Low-RAM Engine) ---")
+input_utente = input("Inserisci le date da recuperare (YYYY-MM-DD) separate da virgola: ")
+
+giorni_da_recuperare = [data.strip() for data in input_utente.split(",") if data.strip()]
+
+if not giorni_da_recuperare:
+    print("Nessuna data valida inserita. Interruzione.")
+    sys.exit(0)
+
+for data_target_str in giorni_da_recuperare:
+    print(f"Elaborazione: {data_target_str}...")
+    matching_lines = []
+    
+    try:
+        # Stream lettura file
+        with open(STORICO_FILE, "r", encoding="utf-8") as f:
+            header_line = f.readline()
+            for line in f:
+                if line.startswith(data_target_str):
+                    matching_lines.append(line)
+    except Exception as e:
+         print(f"-> ERRORE lettura file: {e}")
+         continue
+                
+    if not matching_lines:
+        print(f"-> Nessun record trovato per il {data_target_str}. Salto.")
+        continue
+        
+    try:
+        dati_filtrati = header_line + "".join(matching_lines)
+        df_data = pd.read_csv(io.StringIO(dati_filtrati), sep='\t')
+        df_data['date'] = pd.to_datetime(df_data['date'], errors='coerce')
+        
+        colonne_w = [f'W{i:02d}' for i in range(1, 17)]
+        colonne_b = [f'B{i:02d}' for i in range(1, 17)]
+        
+        df_data[colonne_w] = df_data[colonne_w].apply(pd.to_numeric, errors='coerce').fillna(0)
+        df_data[colonne_b] = df_data[colonne_b].apply(pd.to_numeric, errors='coerce').fillna(0)
+        
+        df_data['PESO SCARICO TOT'] = df_data[colonne_w + colonne_b].sum(axis=1) / 10
+        df_data['PESO SCARICO B'] = df_data[colonne_w].sum(axis=1) / 10
+        df_data['PESO SCARICO A'] = df_data[colonne_b].sum(axis=1) / 10
+        
+        df_data['date'] = df_data['date'].dt.strftime("%Y-%m-%d %H:%M:%S")
+        
+        dt_oggetto = datetime.strptime(data_target_str, "%Y-%m-%d")
+        percorso_out = ARCHIVIO_DIR / str(dt_oggetto.year) / f"{dt_oggetto.month:02d}"
+        percorso_out.mkdir(parents=True, exist_ok=True)
+        
+        file_excel = percorso_out / f"WeightReport_{data_target_str}.xlsx"
+        df_data.to_excel(file_excel, index=False, engine='openpyxl')
+        print(f"-> COMPLETATO: Generato {file_excel.name} ({len(df_data)} righe).")
+        
+    except Exception as e:
+        print(f"-> ERRORE durante l'elaborazione del {data_target_str}: {e}")
+
+print("\n--- PROCEDURA COMPLETATA ---")
+```
