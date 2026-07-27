@@ -3,6 +3,7 @@ title: "Industrial IoT Data Pipeline & Low-RAM ETL Engine"
 date: 2026-07-27
 description: "Architettura per l'acquisizione, la persistenza e l'elaborazione ETL di dati da macchinari industriali con approccio Low-RAM."
 tags: ["Python", "IoT", "ETL", "Pandas", "Automation", "System Administration"]
+math: true
 draft: false
 ---
 
