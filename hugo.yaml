@@ -138,60 +138,13 @@ params:
         content: "Diploma di istruzione secondaria superiore ad indirizzo tecnico-informatico."
 
   # Sezione Progetti
-  projects:
-    enable: true
-    title: "Progetti & Automazioni"
-    items:
-      - title: "Infrastruttura Docker Homepage & BookStack"
-        content: "Progettazione di un ambiente documentale aziendale containerizzato su host Linux Debian 12 virtualizzato su VMware. Gestione di docker-compose articolati, volumi persistenti, MariaDB e script per backup quotidiani automatici via cron."
-        image: "images/script.jpg"
-        badges:
-          - "Docker"
-          - "Debian"
-          - "VMware"
-        links:
-          - icon: "fab fa-github"
-            url: "https://github.com"
-
-      - title: "BookStack Folder Importer"
-        content: "Applicativo Windows Form sviluppato in PowerShell con interfaccia grafica .NET. Esegue lo scanning ricorsivo di share di rete ed effettua l'importazione massiva di documentazione aziendale (.docx, .pdf, .xlsx) in BookStack via API REST, ricostruendo fedelmente la gerarchia delle cartelle."
-        image: "images/script.jpg"
-        badges:
-          - "PowerShell"
-          - "REST API"
-          - ".NET GUI"
-        links:
-          - icon: "fas fa-book-open"
-            url: "projects/bookstack_importer/"
-
-      - title: "Machine Poller & Data Engineering"
-        content: "Pipeline scritta in Python per l'estrazione periodica automatizzata dei log pesate da un macchinario di produzione industriale. Gestisce il download sicuro via API HTTP, l'azzeramento programmato della RAM della macchina e la successiva archiviazione incrementale in report Excel tramite Pandas."
-        image: "images/script.jpg"
-        badges:
-          - "Python"
-          - "Pandas"
-          - "Industrial OT"
-        links:
-          - icon: "fab fa-github"
-            url: "https://github.com"
-
-      - title: "Active Directory Compliance & Audit Tools"
-        content: "Sviluppo di strumenti di auditing PowerShell per la sicurezza dei domini AD. Include un tool grafico per l'identificazione ed esportazione (CSV/TXT) degli account utente inattivi e uno script di analisi di sicurezza bitwise sull'attributo msDS-SupportedEncryptionTypes per validare gli algoritmi di cifratura Kerberos/AES attivi sulle macchine."
-        image: "images/script.jpg"
-        badges:
-          - "PowerShell"
-          - "Active Directory"
-          - "Security"
-        links:
-          - icon: "fab fa-github"
-            url: "https://github.com"
-
+ 
   # Sezione Contatti
   contact:
     enable: true
     content: "La mia casella di posta è sempre aperta. Se vuoi scambiare due chiacchiere su architetture di rete, gestione server, cybersecurity o scripting sistemistico, fai un fischio!"
     btnName: Scrivimi un'e-mail
-    btnLink: "mailto:matteo.pipola.mty@gmail.com"
+    btnLink: "mailto:example@gmail.com"
 
   footer:
     recentPosts:
