@@ -73,25 +73,26 @@ params:
           url: "https://linkedin.com"
 
   # Sezione Chi Sono (About)
+  # Sezione Chi Sono (About)
   about:
     enable: true
     title: "Chi Sono"
     image: "images/me-black.jpg"
     content: |-
-      Sono un Amministratore di Sistema e di Rete orientato alla sicurezza, alla risoluzione mirata di problematiche complesse e all'efficienza operativa delle infrastrutture IT aziendali.
+      Sono un Amministratore di Sistema e di Rete focalizzato sulla sicurezza, sull'affidabilità delle infrastrutture IT e sull'efficienza operativa aziendale.
 
-      Ho maturato una solida esperienza nel supporto tecnico L1/L2 avanzato, nella gestione e amministrazione di domini Active Directory, e nell'applicazione di policy di conformità e sicurezza (Intune/Azure AD). Sviluppo script e piccoli applicativi in PowerShell e Python come strumenti sistemistici per automatizzare la manutenzione dei server, garantire l'integrità dei piani di backup aziendali e azzerare i task manuali ridondanti.
+      Ho una solida esperienza nell'amministrazione di ambienti ibridi, dalla gestione di domini Active Directory all'applicazione di policy di sicurezza e conformità tramite Entra ID e Intune. Il mio punto di forza è l'automazione: sviluppo script avanzati e tool dedicati in PowerShell e Python per ottimizzare la manutenzione dei server, garantire l'integrità dei flussi di backup e abbattere drasticamente i task manuali ridondanti.
     skills:
       enable: true
       title: "Ecosistemi tecnologici e competenze core:"
       items:
-        - "PowerShell Scripting & GUI .NET"
-        - "Python (Pandas, Automation, API REST)"
-        - "Active Directory & Azure AD / Intune"
-        - "Networking & Troubleshooting LAN/WAN/VPN"
-        - "Linux Server (Debian/Ubuntu) & Windows Server"
-        - "Docker, Containerizzazione & VMware"
-        - "Sistemi Gestionali e Ticketing (SAP, GLPI, Redmine)"
+        - "PowerShell Scripting & .NET GUI Tools"
+        - "Python (Automation, Data Analysis, API REST)"
+        - "Active Directory, Entra ID (Azure) & MDM Intune"
+        - "Networking & Troubleshooting (LAN/WAN/VPN)"
+        - "Windows Server & Linux Server (Debian/Ubuntu)"
+        - "Virtualizzazione & Container (VMware, Docker)"
+        - "ITSM, Asset Management & ERP (GLPI, Redmine, SAP)"
 
   # Sezione Esperienza
   experience:
