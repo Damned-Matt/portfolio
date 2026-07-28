@@ -55,10 +55,10 @@ params:
   # Sezione Iniziale (Hero)
   hero:
     enable: true
-    intro: "Ciao, mi chiamo"
+    intro: "Ciao, sono"
     title: "Matteo Pipola"
-    subtitle: "System & Network Administrator Junior"
-    content: "Specializzato nella gestione di infrastrutture IT, amministrazione di domini Active Directory, supporto sistemistico avanzato e automazione tramite scripting in PowerShell e Python."
+    subtitle: "System & Network Administrator"
+    content: "Costruisco e gestisco infrastrutture IT sicure ed efficienti. Specializzato nell'amministrazione di ambienti ibridi, networking e automazione avanzata dei processi tramite PowerShell e Python."
     image: "images/me.jpg"
     roundImage: true
     bottomImage:
@@ -68,11 +68,10 @@ params:
     socialLinks:
       fontAwesomeIcons:
         - icon: "fab fa-github"
-          url: "https://github.com"
+          url: "https://github.com/Damned-Matt"
         - icon: "fab fa-linkedin"
-          url: "https://linkedin.com"
+          url: "https://it.linkedin.com/in/matteopipola"
 
-  # Sezione Chi Sono (About)
   # Sezione Chi Sono (About)
   about:
     enable: true
