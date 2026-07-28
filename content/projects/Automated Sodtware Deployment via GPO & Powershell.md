@@ -4,9 +4,9 @@ date: 2026-07-28
 description: "Architettura Idempotente per la distribuzione automatizzata e 'zero-touch' di software ed agenti aziendali su centinaia di endpoint Windows via Active Directory."
 tags: ["PowerShell", "Active Directory", "GPO", "Automation", "Windows Server", "DevOps"]
 draft: false
----
+image: "images/script.jpg"
 
-# 🚀 Enterprise Zero-Touch Deployment Engine (GPO + Idempotent PowerShell)
+---
 
 Un framework di distribuzione software automatizzato progettato per installare agenti di gestione, software aziendali e patch di sicurezza su centinaia di endpoint Windows all'interno di un dominio Active Directory, eliminando la necessità di interventi manuali sul campo.
 
@@ -14,7 +14,7 @@ Il sistema adotta il principio dell'**Idempotenza**, garantendo che lo script d'
 
 ---
 
-## 📐 Architettura & Flusso Operativo
+## Architettura & Flusso Operativo
 
 ```
 +-----------------------------------------------------------------------+
@@ -50,7 +50,7 @@ Il sistema adotta il principio dell'**Idempotenza**, garantendo che lo script d'
 
 ---
 
-## 💡 Il Problema Aziendale & La Soluzione
+## Il Problema Aziendale & La Soluzione
 
 ### **Contesto e Criticità**
 * **Inefficienza dei Deploy Manuali:** Installare o aggiornare agenti (es. GLPI Agent, sistemi di sicurezza, software di teleassistenza) macchina per macchina richiede centinaia di ore/uomo di supporto tecnico.
@@ -64,7 +64,7 @@ Il sistema adotta il principio dell'**Idempotenza**, garantendo che lo script d'
 
 ---
 
-## 🛠️ Tech Stack & Requisiti
+## Tech Stack & Requisiti
 
 * **Language:** PowerShell 5.1+ / Batch Scripting
 * **Directory Services:** Microsoft Active Directory / Group Policy Management (GPMC)
@@ -73,7 +73,7 @@ Il sistema adotta il principio dell'**Idempotenza**, garantendo che lo script d'
 
 ---
 
-## 💻 Codice Sorgente Sanificato (`deploy_agent.ps1`)
+## Codice Sorgente Sanificato (`deploy_agent.ps1`)
 
 ```powershell
 <#
@@ -162,7 +162,7 @@ catch {
 
 ---
 
-## ⚙️ Guida all'Implementazione in Active Directory
+## Guida all'Implementazione in Active Directory
 
 1. **Posizionamento Script:** Copiare lo script `.ps1` all'interno della cartella `SYSVOL` del Domain Controller (`\\domain.local\SYSVOL\domain.local\scripts\`).
 2. **Creazione GPO:**
