@@ -104,28 +104,29 @@ params:
           - name: "System & Network Administrator"
             date: "Ottobre 2025 - Presente"
             content: |
-              - Gestione e manutenzione ordinaria e straordinaria dell'architettura di rete aziendale.
-              - Sviluppo di automazioni infrastrutturali per il monitoraggio preventivo, l'ottimizzazione dello spazio storage sui server e la manutenzione sussidiaria dei sistemi core.
-              - Ottimizzazione dei processi di backup aziendali e disaster recovery per environments fisici e containerizzati.
+              - Amministrazione e manutenzione dell'infrastruttura di rete aziendale, garantendone sicurezza e affidabilità.
+              - Implementazione in totale autonomia di un'infrastruttura a container basata su Docker, curando il deployment di BookStack come Knowledge Base aziendale.
+              - Configurazione da zero del sistema ITSM GLPI, strutturando la gestione dei ticket e realizzando l'inventario completo di tutti gli asset IT.
+              - Sviluppo di script di automazione per il monitoraggio proattivo, l'ottimizzazione dello storage e la gestione dei sistemi core.
+              - Progettazione e ottimizzazione delle policy di backup e dei piani di Disaster Recovery per ambienti fisici e containerizzati.
       - company: "Unitec SpA"
         companyUrl: "https://www.unitec-group.com/"
         jobs:
-          - name: "Impiegato Informatico - Help Desk L1/L2"
+          - name: "IT Help Desk Specialist L1/L2"
             date: "Ottobre 2024 - Ottobre 2025"
             content: |
-              - Fornitura di supporto tecnico di primo e secondo livello (L1/L2) a utenti interni, on-site e da remoto nelle filiali tramite TeamViewer.
-              - Gestione e amministrazione di Active Directory, gruppi, licenze Microsoft 365, policy MDM Intune e Azure AD.
-              - Implementazione di script in PowerShell e Python per automatizzare i processi IT interni; gestione del ciclo dei ticket tramite GLPI, Redmine e interfaccia con gestionale SAP.
+              - Supporto tecnico on-site e da remoto per utenti e filiali, assicurando la risoluzione tempestiva degli incidenti.
+              - Amministrazione di Active Directory, Entra ID (ex Azure AD), licenze Microsoft 365 e gestione dispositivi tramite policy MDM Intune.
+              - Automazione di task e processi IT interni tramite scripting in PowerShell e Python.
+              - Gestione del ciclo dei ticket tramite GLPI e Redmine, e supporto base su interfacce ERP (SAP).
       - company: "Teleco"
         companyUrl: ""
         jobs:
           - name: "Tecnico Informatico"
             date: "Marzo 2024 - Giugno 2024"
             content: |
-              - Sviluppo e manutenzione del portale aziendale in ambiente ASP, correzione bug e implementazione di nuove funzionalità.
-              - Gestione dell'help desk L1 interno e riparazione/configurazione hardware e software delle workstation aziendali.
-
-  # Sezione Istruzione
+              - Sviluppo, manutenzione e bug-fixing del portale web aziendale in ambiente ASP.
+              - Supporto Help Desk di primo livello, inclusa l'installazione e configurazione (hardware e software) delle workstation aziendali.
   education:
     enable: true
     title: "Istruzione e Formazione"
@@ -144,7 +145,7 @@ params:
     items:
   # Sezione Contatti
   contact:
-    enable: true
+    enable: false
     content: "La mia casella di posta è sempre aperta. Se vuoi scambiare due chiacchiere su architetture di rete, gestione server, cybersecurity o scripting sistemistico, fai un fischio!"
     btnName: Scrivimi un'e-mail
     btnLink: "mailto:example@gmail.com"
@@ -156,5 +157,5 @@ params:
       title: "Recent Posts"
       enable: false
     socialNetworks:
-      github: "https://github.com"
-      linkedin: "https://linkedin.com"
+      github: "https://github.com/Damned-Matt"
+      linkedin: "https://it.linkedin.com/in/matteopipola"
