@@ -3,17 +3,15 @@ title: "Industrial IoT Data Pipeline & Low-RAM ETL Engine"
 date: 2026-07-27
 description: "Architettura per l'acquisizione, la persistenza e l'elaborazione ETL di dati da macchinari industriali con approccio Low-RAM."
 tags: ["Python", "IoT", "ETL", "Pandas", "Automation", "System Administration"]
-math: true
 draft: false
 ---
 
-# 🏭 Industrial IoT Data Pipeline & Low-RAM ETL Engine
 
 Un'architettura completa per l'acquisizione, la persistenza e l'elaborazione ETL di dati da macchinari di pesatura industriale. Il sistema collega l'infrastruttura operativa (OT) con i sistemi d'analisi IT aziendali, risolvendo le limitazioni di RAM dei dispositivi periferici (*edge*) e garantendo la gestione di file di log di grandi dimensioni con un'impronta di memoria minimale.
 
 ---
 
-## 📐 Architettura di Sistema
+## Architettura di Sistema
 
 ```
 +---------------------------+
@@ -43,7 +41,7 @@ Un'architettura completa per l'acquisizione, la persistenza e l'elaborazione ETL
 
 ---
 
-## 💡 Il Problema Aziendale & La Soluzione
+## Il Problema Aziendale & La Soluzione
 
 ### **Contesto e Criticità**
 * **Memoria Periferica Limitata:** La scheda di controllo del macchinario industriale accumula i dati di pesatura nella RAM interna. Senza una pulizia periodica, il sistema va in overflow bloccando le registrazioni.
@@ -57,7 +55,7 @@ Un'architettura completa per l'acquisizione, la persistenza e l'elaborazione ETL
 
 ---
 
-## 🛠️ Tech Stack & Requisiti
+## Tech Stack & Requisiti
 
 * **Language:** Python 3.8+
 * **Libraries:** `pandas`, `openpyxl`, `requests`, `pathlib`
@@ -67,7 +65,7 @@ Un'architettura completa per l'acquisizione, la persistenza e l'elaborazione ETL
 
 ---
 
-## 📑 Struttura dei Moduli
+## Struttura dei Moduli
 
 ### 1. `poller_daemon.py` — *Ingestion Engine*
 * **Frequenza:** Esecuzione ogni 10 minuti via Task Scheduler.
@@ -84,9 +82,9 @@ Un'architettura completa per l'acquisizione, la persistenza e l'elaborazione ETL
   * Scansiona in modalità *stream* il log storico filtrando solo le righe pertinenti.
   * Normalizza le serie numeriche e calcola i pesi totali e parziali secondo i modelli:
 
-$$ \text{PESO TOT} = \frac{\sum_{i=1}^{16} W_i + \sum_{i=1}^{16} B_i}{10} $$
+PESO TOT = ( ∑ᵢ₌₁¹⁶ Wᵢ + ∑ᵢ₌₁¹⁶ Bᵢ ) / 10
 
-$$ \text{PESO CANALE B} = \frac{\sum_{i=1}^{16} W_i}{10}, \quad \text{PESO CANALE A} = \frac{\sum_{i=1}^{16} B_i}{10} $$
+PESO CANALE B = ( ∑ᵢ₌₁¹⁶ Wᵢ ) / 10,   PESO CANALE A = ( ∑ᵢ₌₁¹⁶ Bᵢ ) / 10
 
   * Genera e organizza i file Excel nell'alberatura `/Archivio_Excel/YYYY/MM/WeightReport_YYYY-MM-DD.xlsx`.
 
@@ -98,7 +96,7 @@ $$ \text{PESO CANALE B} = \frac{\sum_{i=1}^{16} W_i}{10}, \quad \text{PESO CANAL
 
 ---
 
-## ⚙️ Configurazione & Variabili d'Ambiente
+##  Configurazione & Variabili d'Ambiente
 
 Per l'installazione in ambienti di produzione o di test, configurare i parametri principali all'interno delle variabili di sistema o dei file `.env`:
 
@@ -117,7 +115,7 @@ MONITOR_FILE = BASE_DIR / "pipeline_execution.log"
 
 ---
 
-## 💻 Codice Sorgente Sanificato
+##  Codice Sorgente Sanificato
 
 ### Modulo 1: Ingestion Engine (`poller_daemon.py`)
 
