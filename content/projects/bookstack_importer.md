@@ -3,7 +3,7 @@ title: "BookStack Folder Importer"
 date: 2026-06-25
 draft: false
 tags: ["PowerShell", "REST API", ".NET GUI"]
-image: "images/script.jpg"
+image: "/images/script.jpg"
 summary: "Applicativo Windows Form sviluppato in PowerShell con interfaccia grafica .NET. Esegue lo scanning ricorsivo di share di rete ed effettua l'importazione massiva di documentazione aziendale (.docx, .pdf, .xlsx) in BookStack via API REST."
 ---
 

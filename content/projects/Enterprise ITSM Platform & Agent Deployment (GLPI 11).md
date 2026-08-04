@@ -4,7 +4,7 @@ date: 2026-07-27
 description: "Implementazione end-to-end di GLPI 11 su stack LAMP: hardening di sicurezza web, integrazione Mail-to-Ticket e predisposizione al deployment via GPO."
 tags: ["SysAdmin", "GLPI", "ITSM", "Linux", "Ubuntu", "Apache", "Active Directory", "Automation"]
 draft: false
-image: "images/glpi.jpg"
+image: "/images/glpi.jpg"
 ---
 
 **Descrizione:** Implementazione *end-to-end* di una piattaforma di IT Service Management (GLPI 11) su architettura LAMP in ambiente virtualizzato VMware vCenter. Il progetto include il setup dell'infrastruttura, l'hardening di sicurezza delle directory web, l'integrazione del sistema Mail-to-Ticket per l'helpdesk e la predisposizione al deployment automatizzato dell'Agent sui client aziendali.

@@ -4,7 +4,7 @@ date: 2026-07-28
 description: "Script Bash difensivo per la rotazione automatizzata dei backup locali con Sanity Check sulla nomenclatura delle directory e prevenzione della perdita dati."
 tags: ["Bash", "Linux", "Backup", "Automation", "SysAdmin", "DevOps"]
 draft: false
-image: "images/script.jpg"
+image: "/images/script.jpg"
 ---
 
 Script Bash professionale progettato per l'amministrazione di sistemi Linux e la gestione automatizzata della rotazione dei backup locali generati da procedure schedulate o pannelli gestionali[cite: 2]. 
