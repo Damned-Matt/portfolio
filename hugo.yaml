@@ -34,10 +34,11 @@ markup:
 params:
   title: "Matteo Pipola | Portfolio"
   description: "Portfolio professionale di Matteo Pipola - System Administrator & IT Automation Specialist"
-  favicon: "fav.png"
+  favicon: "/portfolio/fav.png"
+  brandLogo: "/portfolio/fav.png"
+
   useBootstrapCDN: false
   animate: true
-  favicon: "/portfolio/fav.png"
 
   navbar:
     align: ms-auto
@@ -54,7 +55,6 @@ params:
       disableProjects: false
       disableAchievements: true
       disableContact: false
-  brandLogo: "/portfolio/fav.png"
   # Sezione Iniziale (Hero)
   hero:
     enable: true
