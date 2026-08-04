@@ -2,8 +2,8 @@ baseURL: "https://damned-matt.github.io/portfolio/"
 title: "Matteo Pipola | Portfolio"
 theme: hugo-profile
 
-#relativeURLs: false
-#canonifyURLs: false
+canonifyURLs: true
+relativeURLs: false
 # Configurazione Lingua
 defaultContentLanguage: "it"
 defaultContentLanguageInSubdir: false
