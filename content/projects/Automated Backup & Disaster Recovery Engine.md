@@ -4,7 +4,7 @@ date: 2026-07-28
 description: "Infrastruttura completa per la gestione e l'automazione dei backup: include uno script Bash difensivo per la rotazione locale con Sanity Check e un container Docker per la sincronizzazione remota automatizzata su NAS via SFTP."
 tags: ["Bash", "Docker", "Linux", "Backup", "Automation", "SysAdmin", "DevOps", "NAS", "SFTP"]
 draft: false
-image: "images/script.jpg"
+image: "/images/script.jpg"
 ---
 **Panoramica del Progetto**
 Questo progetto illustra un'infrastruttura completa e automatizzata per la gestione, la rotazione e l'archiviazione sicura dei backup di server web. L'architettura è suddivisa in due moduli principali:
