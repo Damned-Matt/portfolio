@@ -4,7 +4,7 @@ date: 2026-07-28
 description: "Architettura Idempotente per la distribuzione automatizzata e 'zero-touch' di software ed agenti aziendali su centinaia di endpoint Windows via Active Directory."
 tags: ["PowerShell", "Active Directory", "GPO", "Automation", "Windows Server", "DevOps"]
 draft: false
-image: "/images/script.jpg"
+image: "/images/gpo.jpg"
 
 ---
 
