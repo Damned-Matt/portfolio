@@ -2,8 +2,8 @@ baseURL: "https://damned-matt.github.io/portfolio/"
 title: "Matteo Pipola | Portfolio"
 theme: hugo-profile
 
-relativeURLs: true
-canonifyURLs: true
+relativeURLs: false
+canonifyURLs: false
 # Configurazione Lingua
 defaultContentLanguage: "it"
 defaultContentLanguageInSubdir: false
@@ -33,7 +33,7 @@ markup:
 
 params:
   title: "Matteo Pipola | Portfolio"
-  description: "Portfolio professionale di Matteo Pipola - System & Network Administrator"
+  description: "Portfolio professionale di Matteo Pipola - System Administrator & IT Automation Specialist"
   favicon: "fav.png"
   useBootstrapCDN: false
   animate: true
@@ -59,7 +59,7 @@ params:
     enable: true
     intro: "Ciao, sono"
     title: "Matteo Pipola"
-    subtitle: "System & Network Administrator"
+    subtitle: "System Administrator & IT Automation Specialist"
     content: "Costruisco e gestisco infrastrutture IT sicure ed efficienti. Specializzato nell'amministrazione di ambienti ibridi, networking e automazione avanzata dei processi tramite PowerShell e Python."
     image: "images/me.jpg"
     roundImage: true
